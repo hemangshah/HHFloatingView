@@ -26,3 +26,18 @@ An easy to use and setup floating view for your app. 🎡
 ## Usage
 
 Please check the example project.
+
+<b>Have an idea for improvements of this class?
+Please open an [issue](https://github.com/hemangshah/HHFloatingView/issues/new).</b>
+    
+## Credits
+
+<b>[Hemang Shah](https://about.me/hemang.shah)</b>
+
+**You can shoot me an [email](http://www.google.com/recaptcha/mailhide/d?k=01IzGihUsyfigse2G9z80rBw==&c=vU7vyAaau8BctOAIJFwHVbKfgtIqQ4QLJaL73yhnB3k=) to contact.**
+
+## License
+
+The MIT License (MIT)
+
+> Read the [LICENSE](https://github.com/hemangshah/HHFloatingView/blob/master/LICENSE) file for details.
