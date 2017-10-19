@@ -21,7 +21,7 @@ An easy to use and setup floating view for your app. 🎡
 
 2. **CocoaPods**:
 
-    pod 'HHFloatingView', '~>1.0.0'
+    `pod 'HHFloatingView', '~>1.0.0'`
 
 ## Usage
 
