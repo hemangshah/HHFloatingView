@@ -27,8 +27,6 @@ class HHFloatingView: UIView {
     internal var isOpen: Bool = false
 
     //MARK: Timer
-    fileprivate let animationTimerDuration = 0.3
-    fileprivate let internalAnimationTimerDuration = 0.2
     fileprivate var currentButtonIndex = 0
     fileprivate var animationTimer: Timer!
     
@@ -128,7 +126,7 @@ class HHFloatingView: UIView {
         let optionButtonCenter = openingCenters[currentButtonIndex]
         optionButton.alpha = 0.0
         
-        UIView.animate(withDuration: internalAnimationTimerDuration, animations: {
+        UIView.animate(withDuration: configurations.internalAnimationTimerDuration, animations: {
             optionButton.alpha = 1.0
             optionButton.center = optionButtonCenter
         }, completion: { (isCompleted) in
@@ -154,7 +152,7 @@ class HHFloatingView: UIView {
         //Get the current Button.
         let optionButton = options[currentButtonIndex]
         
-        UIView.animate(withDuration: internalAnimationTimerDuration, animations: {
+        UIView.animate(withDuration: configurations.internalAnimationTimerDuration, animations: {
             optionButton.alpha = 0.0
             optionButton.center = self.center
         }, completion: { (isCompleted) in
@@ -270,13 +268,13 @@ class HHFloatingView: UIView {
             
             self.currentButtonIndex = maxOptions()
             self.isOpen = false
-            self.animationTimer = Timer.scheduledTimer(timeInterval: animationTimerDuration, target: self, selector: #selector(optionsCloseAnimation), userInfo: nil, repeats: true)
+            self.animationTimer = Timer.scheduledTimer(timeInterval: configurations.animationTimerDuration, target: self, selector: #selector(optionsCloseAnimation), userInfo: nil, repeats: true)
             
         } else {
             
             self.currentButtonIndex = 0
             self.isOpen = true
-            self.animationTimer = Timer.scheduledTimer(timeInterval: animationTimerDuration, target: self, selector: #selector(optionsOpenAnimation), userInfo: nil, repeats: true)
+            self.animationTimer = Timer.scheduledTimer(timeInterval: configurations.animationTimerDuration, target: self, selector: #selector(optionsOpenAnimation), userInfo: nil, repeats: true)
         }
     }
     

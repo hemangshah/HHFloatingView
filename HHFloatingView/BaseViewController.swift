@@ -61,6 +61,8 @@ extension BaseViewController: HHFloatingViewDatasource {
         configure.optionsSize = CGSize.init(width: 70.0, height: 70.0)
         configure.initialMargin = 20.0
         configure.internalMargin = 10.0
+        configure.animationTimerDuration = 0.3
+        configure.internalAnimationTimerDuration = 0.2
         return configure
     }
 }

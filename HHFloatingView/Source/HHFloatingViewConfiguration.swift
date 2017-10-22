@@ -23,4 +23,6 @@ import UIKit
     var optionsSize = CGSize.init(width: 60.0, height: 60.0)
     var internalMargin: CGFloat = 10.0
     var initialMargin: CGFloat = 20.0
+    var animationTimerDuration: TimeInterval = 0.3
+    var internalAnimationTimerDuration: TimeInterval = 0.2
 }
