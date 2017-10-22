@@ -34,6 +34,7 @@ Please check the example project.
 # ToDo[s]
 
 - [x] More customizations.
+- [ ] Add Documentations.
 
 You can [watch](https://github.com/hemangshah/HHFloatingView/subscription) to **HHFloatingView** to see continuous updates. Stay tuned.
 
