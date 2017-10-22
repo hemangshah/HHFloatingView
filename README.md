@@ -22,7 +22,7 @@ An easy to use and setup floating view for your app. 🎡
 
 2. **CocoaPods**:
 
-    `pod 'HHFloatingView', '~>1.0.0'`
+    `pod 'HHFloatingView'
     
 > You can read the [CHANGELOG](https://github.com/hemangshah/HHFloatingView/blob/master/CHANGELOG.md) file for a particular release.
 
@@ -33,7 +33,7 @@ Please check the example project.
 
 # ToDo[s]
 
-- [ ] More customizations.
+- [x] More customizations.
 
 You can [watch](https://github.com/hemangshah/HHFloatingView/subscription) to **HHFloatingView** to see continuous updates. Stay tuned.
 
