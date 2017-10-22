@@ -36,6 +36,10 @@ Please open an [issue](https://github.com/hemangshah/HHFloatingView/issues/new).
 
 **You can shoot me an [email](http://www.google.com/recaptcha/mailhide/d?k=01IzGihUsyfigse2G9z80rBw==&c=vU7vyAaau8BctOAIJFwHVbKfgtIqQ4QLJaL73yhnB3k=) to contact.**
 
+## Thank You!!
+
+See the [contributions](https://github.com/hemangshah/HHFloatingView/blob/master/CONTRIBUTIONS.md) for details.
+
 ## License
 
 The MIT License (MIT)
