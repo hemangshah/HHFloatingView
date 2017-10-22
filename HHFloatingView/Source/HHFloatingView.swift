@@ -79,7 +79,7 @@ class HHFloatingView: UIView {
         optionButton.setImage(configurations.handlerImage, for: .normal)
         optionButton.addTarget(self, action: #selector(actionOpenOrCloseOptionsView), for: .touchUpInside)
         optionButton.frame = CGRect.init(origin: CGPoint.zero, size: configurations.handlerSize)
-        self.dropShadow(onView: optionButton, withRadius: optionButton.layer.cornerRadius, withColor: optionButton.backgroundColor!.cgColor)
+        self.dropShadow(onView: optionButton, withRadius: optionButton.layer.cornerRadius, withColor: optionButton.backgroundColor!.cgColor, isHandlerButton: true)
         superView.addSubview(optionButton)
         optionButton.center = self.center
         self.handlerButton = optionButton
@@ -93,7 +93,7 @@ class HHFloatingView: UIView {
             optionButton.alpha = 0.0
             optionButton.addTarget(self, action: #selector(actionOptionsTapped), for: .touchUpInside)
             optionButton.frame = CGRect.init(origin: CGPoint.zero, size: configurations.optionsSize)
-            self.dropShadow(onView: optionButton, withRadius: optionButton.layer.cornerRadius, withColor: optionButton.backgroundColor!.cgColor)
+            self.dropShadow(onView: optionButton, withRadius: optionButton.layer.cornerRadius, withColor: optionButton.backgroundColor!.cgColor, isHandlerButton: false)
             superView.addSubview(optionButton)
             optionButton.center = self.center
             self.options.append(optionButton)
@@ -104,7 +104,16 @@ class HHFloatingView: UIView {
     }
     
     //MARK: UI Helpers
-    func dropShadow(onView view: UIView, withRadius radius: CGFloat, withColor color: CGColor) {
+    func dropShadow(onView view: UIView, withRadius radius: CGFloat, withColor color: CGColor, isHandlerButton: Bool) {
+        if isHandlerButton {
+            if !configurations.showShadowInHandlerButton {
+                return
+            }
+        } else {
+            if !configurations.showShadowInButtons {
+                return
+            }
+        }
         view.layer.masksToBounds = false
         view.layer.shadowColor = color
         view.layer.shadowOpacity = 0.2

@@ -47,6 +47,8 @@ extension BaseViewController: HHFloatingViewDatasource {
                                   UIColor.blue.withAlphaComponent(0.5),
                                   UIColor.cyan.withAlphaComponent(0.5),
                                   UIColor.magenta.withAlphaComponent(0.5)]
+        configure.showShadowInButtons = false
+        configure.showShadowInHandlerButton = false
         return configure
     }
 }
