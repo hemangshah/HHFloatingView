@@ -32,6 +32,8 @@ Please check the example project.
 
 - [ ] More customizations.
 
+You can [watch](https://github.com/hemangshah/HHFloatingView/subscription) to **HHFloatingView** to see continuous updates. Stay tuned.
+
 <b>Have an idea for improvements of this class?
 Please open an [issue](https://github.com/hemangshah/HHFloatingView/issues/new).</b>
     
