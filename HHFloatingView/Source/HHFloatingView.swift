@@ -18,22 +18,27 @@ import UIKit
 
 class HHFloatingView: UIView {
     
+    //MARK: Datasource/Delegate
     weak var datasource: HHFloatingViewDatasource?
     weak var delegate: HHFloatingViewDelegate?
     
+    private(set) var isOpen: Bool = false
+        
     fileprivate var options: Array<HHFloatingViewButton> = Array()
+    
     fileprivate var openingCenters: Array<CGPoint> = Array()
     
-    internal var isOpen: Bool = false
-
-    //MARK: Timer
     fileprivate var currentButtonIndex = 0
-    fileprivate var animationTimer: Timer!
     
+    //MARK: Handler Button
     fileprivate var handlerButton: HHFloatingViewButton?
     
+    //MARK: Configurations
     fileprivate var configurations: HHFloatingViewConfiguration!
     
+    //MARK: Timer
+    fileprivate var animationTimer: Timer!
+
     //MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
