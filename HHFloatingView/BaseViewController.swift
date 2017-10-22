@@ -10,10 +10,6 @@ import UIKit
 
 class BaseViewController: UIViewController {
 
-    //Image Icons for HHFloatingView
-    fileprivate var floatingViewOptionsImages: Array<UIImage> = []
-    //Colors for HHFloatingView
-    fileprivate var floatingViewOptionsColors: Array<UIColor> = []
     //Initialize HHFloatingView
     fileprivate var floatingView: HHFloatingView = {
         let floatingViewSize: CGFloat = 100.0
