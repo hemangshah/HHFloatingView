@@ -122,11 +122,11 @@ class HHFloatingView: UIView {
         }
         
         //Get the current Button.
-        let optionButton = options[currentButtonIndex]
-        let optionButtonCenter = openingCenters[currentButtonIndex]
+        let optionButton = self.options[self.currentButtonIndex]
+        let optionButtonCenter = self.openingCenters[self.currentButtonIndex]
         optionButton.alpha = 0.0
         
-        UIView.animate(withDuration: configurations.internalAnimationTimerDuration, animations: {
+        UIView.animate(withDuration: self.configurations.internalAnimationTimerDuration, animations: {
             optionButton.alpha = 1.0
             optionButton.center = optionButtonCenter
         }, completion: { (isCompleted) in
@@ -150,9 +150,9 @@ class HHFloatingView: UIView {
         }
         
         //Get the current Button.
-        let optionButton = options[currentButtonIndex]
+        let optionButton = self.options[self.currentButtonIndex]
         
-        UIView.animate(withDuration: configurations.internalAnimationTimerDuration, animations: {
+        UIView.animate(withDuration: self.configurations.internalAnimationTimerDuration, animations: {
             optionButton.alpha = 0.0
             optionButton.center = self.center
         }, completion: { (isCompleted) in
@@ -327,7 +327,7 @@ class HHFloatingView: UIView {
             if (isOptionsNotEmpty && (isNumberOfOptionsAreEqualsToOptionsColors && isNumberOfOptionsAreEqualsToOptionsImages)) {
                 return true
             } else {
-                fatalError("HHFloatingView: Configuration.optionImages or .optionColors should be equals to the numberOfOptions.")
+                fatalError("HHFloatingView: HHFloatingViewConfiguration.optionImages and HHFloatingViewConfiguration.optionColors should be equals to the numberOfOptions.")
             }
         } else {
             fatalError("HHFloatingView: numberOfOptions should not be Zero.")
