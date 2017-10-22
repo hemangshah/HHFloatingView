@@ -27,6 +27,11 @@ An easy to use and setup floating view for your app. 🎡
 
 Please check the example project.
 
+
+# ToDo[s]
+
+- [ ] More customizations.
+
 <b>Have an idea for improvements of this class?
 Please open an [issue](https://github.com/hemangshah/HHFloatingView/issues/new).</b>
     
