@@ -8,11 +8,11 @@
 
 import UIKit
 
-@objc protocol HHFloatingViewDatasource {
+@objc public protocol HHFloatingViewDatasource {
     func floatingViewConfiguration(floatingView: HHFloatingView) -> HHFloatingViewConfiguration
 }
 
-@objc protocol HHFloatingViewDelegate {
+@objc public protocol HHFloatingViewDelegate {
     func floatingView(floatingView: HHFloatingView, didSelectOption index: Int)
     @objc optional func floatingView(floatingView: HHFloatingView, willShowOption index: Int)
     @objc optional func floatingView(floatingView: HHFloatingView, didShowOption index: Int)
@@ -20,13 +20,13 @@ import UIKit
     @objc optional func floatingView(floatingView: HHFloatingView, didHideOption index: Int)
 }
 
-class HHFloatingView: UIView {
+public final class HHFloatingView: UIView {
     
     //MARK: Datasource/Delegate
-    weak var datasource: HHFloatingViewDatasource?
-    weak var delegate: HHFloatingViewDelegate?
+    public weak var datasource: HHFloatingViewDatasource?
+    public weak var delegate: HHFloatingViewDelegate?
     
-    private(set) var isOpen: Bool = false
+    public private(set) var isOpen: Bool = false
         
     fileprivate var options: Array<HHFloatingViewButton> = Array()
     
@@ -44,11 +44,11 @@ class HHFloatingView: UIView {
     fileprivate var animationTimer: Timer!
 
     //MARK: Init
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -108,7 +108,7 @@ class HHFloatingView: UIView {
     }
     
     //MARK: UI Helpers
-    func dropShadow(onView view: UIView, withRadius radius: CGFloat, withColor color: CGColor, isHandlerButton: Bool) {
+    fileprivate func dropShadow(onView view: UIView, withRadius radius: CGFloat, withColor color: CGColor, isHandlerButton: Bool) {
         if isHandlerButton {
             if !configurations.showShadowInHandlerButton {
                 return
@@ -129,7 +129,7 @@ class HHFloatingView: UIView {
     }
 
     //MARK: Animation Open/Close
-    @objc internal func optionsOpenAnimation() {
+    @objc fileprivate func optionsOpenAnimation() {
         
         //Handling Timer.
         guard self.currentButtonIndex <= self.maxOptions() else {
@@ -158,7 +158,7 @@ class HHFloatingView: UIView {
         self.currentButtonIndex = self.currentButtonIndex + 1
     }
     
-    @objc internal func optionsCloseAnimation() {
+    @objc fileprivate func optionsCloseAnimation() {
         
         //Handling Timer.
         guard self.currentButtonIndex >= 0 else {
