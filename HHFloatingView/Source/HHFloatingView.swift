@@ -13,7 +13,11 @@ import UIKit
 }
 
 @objc protocol HHFloatingViewDelegate {
-    func floatingView(floatingView: HHFloatingView, tappedAtIndex index: Int)
+    func floatingView(floatingView: HHFloatingView, didSelectOption index: Int)
+    @objc optional func floatingView(floatingView: HHFloatingView, willShowOption index: Int)
+    @objc optional func floatingView(floatingView: HHFloatingView, didShowOption index: Int)
+    @objc optional func floatingView(floatingView: HHFloatingView, willHideOption index: Int)
+    @objc optional func floatingView(floatingView: HHFloatingView, didHideOption index: Int)
 }
 
 class HHFloatingView: UIView {
@@ -140,12 +144,14 @@ class HHFloatingView: UIView {
         let optionButtonCenter = self.openingCenters[self.currentButtonIndex]
         optionButton.alpha = 0.0
         
+        self.delegate?.floatingView?(floatingView: self, willShowOption: optionButton.tag)
+        
         UIView.animate(withDuration: self.configurations.internalAnimationTimerDuration, animations: {
             optionButton.alpha = 1.0
             optionButton.center = optionButtonCenter
         }, completion: { (isCompleted) in
             if isCompleted {
-                
+                self.delegate?.floatingView?(floatingView: self, didShowOption: optionButton.tag)
             }
         })
         
@@ -166,12 +172,14 @@ class HHFloatingView: UIView {
         //Get the current Button.
         let optionButton = self.options[self.currentButtonIndex]
         
+        self.delegate?.floatingView?(floatingView: self, willHideOption: optionButton.tag)
+        
         UIView.animate(withDuration: self.configurations.internalAnimationTimerDuration, animations: {
             optionButton.alpha = 0.0
             optionButton.center = self.center
         }, completion: { (isCompleted) in
             if isCompleted {
-                
+                self.delegate?.floatingView?(floatingView: self, didHideOption: optionButton.tag)
             }
         })
         
@@ -210,12 +218,12 @@ class HHFloatingView: UIView {
         
         self.openingCenters.removeAll()
         
-        var lastCenter = self.center
+        var lastCenter: CGPoint = self.center
         let initialMargin: CGFloat = self.configurations.initialMargin
         let internalMargin: CGFloat = self.configurations.internalMargin
-        let topButtonSize = self.configurations.handlerSize
-        let optionsButtonSize = self.configurations.optionsSize
-        var index = 0
+        let topButtonSize: CGSize = self.configurations.handlerSize
+        let optionsButtonSize: CGSize = self.configurations.optionsSize
+        var index: Int = 0
         
         if self.configurations.position == HHFloatingViewPosition.top {
 
@@ -271,7 +279,7 @@ class HHFloatingView: UIView {
     
     //MARK: Actions
     @objc fileprivate func actionOptionsTapped(sender: HHFloatingViewButton) {
-        self.delegate?.floatingView(floatingView: self, tappedAtIndex: sender.tag)
+        self.delegate?.floatingView(floatingView: self, didSelectOption: sender.tag)
     }
     
     @objc fileprivate func actionOpenOrCloseOptionsView(sender: HHFloatingViewButton) {
@@ -282,13 +290,13 @@ class HHFloatingView: UIView {
             
             self.currentButtonIndex = maxOptions()
             self.isOpen = false
-            self.animationTimer = Timer.scheduledTimer(timeInterval: configurations.animationTimerDuration, target: self, selector: #selector(optionsCloseAnimation), userInfo: nil, repeats: true)
+            self.animationTimer = Timer.scheduledTimer(timeInterval: self.configurations.animationTimerDuration, target: self, selector: #selector(self.optionsCloseAnimation), userInfo: nil, repeats: true)
             
         } else {
             
             self.currentButtonIndex = 0
             self.isOpen = true
-            self.animationTimer = Timer.scheduledTimer(timeInterval: configurations.animationTimerDuration, target: self, selector: #selector(optionsOpenAnimation), userInfo: nil, repeats: true)
+            self.animationTimer = Timer.scheduledTimer(timeInterval: self.configurations.animationTimerDuration, target: self, selector: #selector(self.optionsOpenAnimation), userInfo: nil, repeats: true)
         }
     }
     

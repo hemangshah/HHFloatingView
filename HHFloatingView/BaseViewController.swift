@@ -55,7 +55,7 @@ extension BaseViewController: HHFloatingViewDatasource {
 
 //MARK: HHFloatingViewDelegate
 extension BaseViewController: HHFloatingViewDelegate {
-    func floatingView(floatingView: HHFloatingView, tappedAtIndex index: Int) {
+    func floatingView(floatingView: HHFloatingView, didSelectOption index: Int) {
         print("HHFloatingView: Button Selected: \(index)")
         self.floatingView.close()
     }
