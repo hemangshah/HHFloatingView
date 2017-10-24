@@ -51,6 +51,11 @@ public final class HHFloatingView: UIView {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: Scale Animations
+    fileprivate func scaleAnimateButton(button: HHFloatingViewButton?, scaleValue: CGFloat) {
+        button?.transform = CGAffineTransform.init(scaleX: scaleValue, y: scaleValue)
+    }
 
     //MARK: Setup
     fileprivate func fetchDatasource() {
@@ -72,6 +77,18 @@ public final class HHFloatingView: UIView {
         }
         
         self.calculateOptionButtonsOpeningCenters()
+        
+        if self.configurations.showScaleAnimation {
+            self.scaleAnimateButton(button: self.handlerButton, scaleValue: 0.0)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            UIView.animate(withDuration: self.configurations.internalAnimationTimerDuration) {
+                if self.configurations.showScaleAnimation {
+                    self.scaleAnimateButton(button: self.handlerButton, scaleValue: self.configurations.scaleAnimationSize)
+                }
+            }
+        }
     }
     
     fileprivate func setupUI() {
@@ -87,6 +104,10 @@ public final class HHFloatingView: UIView {
         superView.addSubview(optionButton)
         optionButton.center = self.center
         self.handlerButton = optionButton
+        
+        if configurations.showScaleAnimation {
+            self.scaleAnimateButton(button: self.handlerButton, scaleValue: 0.0)
+        }
         
         //Add Option Buttons
         for index in 0..<self.configurations.numberOfOptions {
@@ -105,6 +126,14 @@ public final class HHFloatingView: UIView {
         
         //Calculate the Opening positions for the buttons.
         self.calculateOptionButtonsOpeningCenters()
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            UIView.animate(withDuration: self.configurations.internalAnimationTimerDuration) {
+                if self.configurations.showScaleAnimation {
+                    self.scaleAnimateButton(button: self.handlerButton, scaleValue: self.configurations.scaleAnimationSize)
+                }
+            }
+        }
     }
     
     //MARK: UI Helpers
@@ -141,14 +170,16 @@ public final class HHFloatingView: UIView {
         
         //Get the current Button.
         let optionButton = self.options[self.currentButtonIndex]
-        let optionButtonCenter = self.openingCenters[self.currentButtonIndex]
-        optionButton.alpha = 0.0
-        
         self.delegate?.floatingView?(floatingView: self, willShowOption: optionButton.tag)
         
+        let optionButtonCenter = self.openingCenters[self.currentButtonIndex]
+        optionButton.alpha = 0.0
+        self.scaleAnimateButton(button: optionButton, scaleValue: 0.0)
+
         UIView.animate(withDuration: self.configurations.internalAnimationTimerDuration, animations: {
             optionButton.alpha = 1.0
             optionButton.center = optionButtonCenter
+            self.scaleAnimateButton(button: optionButton, scaleValue: self.configurations.scaleAnimationSize)
         }, completion: { (isCompleted) in
             if isCompleted {
                 self.delegate?.floatingView?(floatingView: self, didShowOption: optionButton.tag)
@@ -171,14 +202,14 @@ public final class HHFloatingView: UIView {
         
         //Get the current Button.
         let optionButton = self.options[self.currentButtonIndex]
-        
         self.delegate?.floatingView?(floatingView: self, willHideOption: optionButton.tag)
         
         UIView.animate(withDuration: self.configurations.internalAnimationTimerDuration, animations: {
-            optionButton.alpha = 0.0
+            self.scaleAnimateButton(button: optionButton, scaleValue: self.configurations.scaleAnimationSize)
             optionButton.center = self.center
         }, completion: { (isCompleted) in
             if isCompleted {
+                optionButton.alpha = 0.0
                 self.delegate?.floatingView?(floatingView: self, didHideOption: optionButton.tag)
             }
         })

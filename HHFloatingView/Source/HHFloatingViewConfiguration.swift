@@ -25,6 +25,8 @@ import UIKit
     public var initialMargin: CGFloat = 20.0
     public var animationTimerDuration: TimeInterval = 0.3
     public var internalAnimationTimerDuration: TimeInterval = 0.2
-    public var showShadowInButtons: Bool = true
-    public var showShadowInHandlerButton: Bool = true
+    public var showShadowInButtons: Bool = false
+    public var showShadowInHandlerButton: Bool = false
+    public var showScaleAnimation: Bool = false
+    public var scaleAnimationSize: CGFloat = 1.0
 }
