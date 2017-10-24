@@ -23,9 +23,11 @@ import UIKit
 public final class HHFloatingView: UIView {
     
     //MARK: Datasource/Delegate
+    /// Datasource for HHFloatingView.
     public weak var datasource: HHFloatingViewDatasource?
+    /// Delegate for HHFloatingView.
     public weak var delegate: HHFloatingViewDelegate?
-    
+    /// Check whether HHFloatingView is open or closed.
     public private(set) var isOpen: Bool = false
         
     fileprivate var options: Array<HHFloatingViewButton> = Array()
@@ -331,6 +333,7 @@ public final class HHFloatingView: UIView {
         }
     }
     
+    /// Reload HHFloatingView.
     internal func reload() {
         if self.isDatasourceSet() {
             if self.isDelegateSet() {
@@ -346,6 +349,7 @@ public final class HHFloatingView: UIView {
         }
     }
     
+    /// Close HHFloatingView.
     internal func close() {
         if self.isOpen {
             self.actionOpenOrCloseOptionsView(sender: self.handlerButton!)
@@ -357,7 +361,7 @@ public final class HHFloatingView: UIView {
         if self.datasource != nil {
             return true
         } else {
-            fatalError("HHFloatingView: Datasource can't be empty.")
+            fatalError("HHFloatingView: Datasource should be set.")
         }
     }
     
@@ -365,7 +369,7 @@ public final class HHFloatingView: UIView {
         if self.delegate != nil {
             return true
         } else {
-            fatalError("HHFloatingView: Delegate can't be empty.")
+            fatalError("HHFloatingView: Delegate should be set.")
         }
     }
     
