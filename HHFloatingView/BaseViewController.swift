@@ -36,7 +36,7 @@ extension BaseViewController: HHFloatingViewDatasource {
         configure.position = .top
         configure.numberOfOptions = 5
         configure.handlerSize = CGSize.init(width: 90.0, height: 90.0)
-        configure.optionsSize = CGSize.init(width: 70.0, height: 70.0)
+        configure.optionsSize = CGSize.init(width: 60.0, height: 60.0)
         configure.initialMargin = 20.0
         configure.internalMargin = 10.0
         configure.handlerImage = #imageLiteral(resourceName: "icon-bird")
