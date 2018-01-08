@@ -21,9 +21,7 @@ An easy to use and setup floating view for your app. 🎡
 
 1. **Manually** - Add `HHFloatingView/Source` folder to your Project. And you're good to use `HHFloatingView`.
 
-2. **CocoaPods**:
-
-    `pod 'HHFloatingView'`
+2. **CocoaPods**: `pod 'HHFloatingView'`
     
 > You can read the [CHANGELOG](https://github.com/hemangshah/HHFloatingView/blob/master/CHANGELOG.md) file for a particular release.
 
