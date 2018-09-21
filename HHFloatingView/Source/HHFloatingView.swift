@@ -8,12 +8,13 @@
 
 import UIKit
 
-@objc public protocol HHFloatingViewDatasource {
+@objc public protocol HHFloatingViewDatasource {    
     func floatingViewConfiguration(floatingView: HHFloatingView) -> HHFloatingViewConfiguration
 }
 
 @objc public protocol HHFloatingViewDelegate {
     func floatingView(floatingView: HHFloatingView, didSelectOption index: Int)
+    
     @objc optional func floatingView(floatingView: HHFloatingView, willShowOption index: Int)
     @objc optional func floatingView(floatingView: HHFloatingView, didShowOption index: Int)
     @objc optional func floatingView(floatingView: HHFloatingView, willHideOption index: Int)
@@ -28,12 +29,10 @@ public final class HHFloatingView: UIView {
     /// Delegate for HHFloatingView.
     public weak var delegate: HHFloatingViewDelegate?
     /// Check whether HHFloatingView is open or closed.
-    public private(set) var isOpen: Bool = false
-        
-    fileprivate var options: Array<HHFloatingViewButton> = Array()
+    public private(set) var isOpen = false
     
-    fileprivate var openingCenters: Array<CGPoint> = Array()
-    
+    fileprivate var options = [HHFloatingViewButton]()
+    fileprivate var openingCenters = [CGPoint]()
     fileprivate var currentButtonIndex = 0
     
     //MARK: Handler Button
@@ -65,14 +64,9 @@ public final class HHFloatingView: UIView {
     }
     
     fileprivate func updateUI() {
-        
-        //Case: Reload
-        
-        //Update UI for Handler Button
-        self.handlerButton?.backgroundColor = configurations.handlerColor
-        self.handlerButton?.setImage(configurations.handlerImage, for: .normal)
-        
-        //Update UI for Option Button
+        self.handlerButton?.backgroundColor = self.configurations.handlerColor
+        self.handlerButton?.setImage(self.configurations.handlerImage, for: .normal)
+
         self.options.forEach { (optionButton) in
             optionButton.backgroundColor = configurations.handlerColor
             optionButton.setImage(configurations.handlerImage, for: .normal)
@@ -95,27 +89,25 @@ public final class HHFloatingView: UIView {
     
     fileprivate func setupUI() {
         let superView = self.superview!
-        
-        //Add Handler Button
+
         let optionButton = HHFloatingViewButton()
-        optionButton.backgroundColor = configurations.handlerColor
-        optionButton.setImage(configurations.handlerImage, for: .normal)
+        optionButton.backgroundColor = self.configurations.handlerColor
+        optionButton.setImage(self.configurations.handlerImage, for: .normal)
         optionButton.addTarget(self, action: #selector(actionOpenOrCloseOptionsView), for: .touchUpInside)
-        optionButton.frame = CGRect.init(origin: CGPoint.zero, size: configurations.handlerSize)
+        optionButton.frame = CGRect.init(origin: CGPoint.zero, size: self.configurations.handlerSize)
         self.dropShadow(onView: optionButton, withRadius: optionButton.layer.cornerRadius, withColor: optionButton.backgroundColor!.cgColor, isHandlerButton: true)
         superView.addSubview(optionButton)
         optionButton.center = self.center
         self.handlerButton = optionButton
         
-        if configurations.showScaleAnimation {
+        if self.configurations.showScaleAnimation {
             self.scaleAnimateButton(button: self.handlerButton, scaleValue: 0.0)
         }
-        
-        //Add Option Buttons
+
         for index in 0..<self.configurations.numberOfOptions {
             let optionButton = HHFloatingViewButton()
-            optionButton.backgroundColor = configurations.optionColors[index]
-            optionButton.setImage(configurations.optionImages[index], for: .normal)
+            optionButton.backgroundColor = self.configurations.optionColors[index]
+            optionButton.setImage(self.configurations.optionImages[index], for: .normal)
             optionButton.tag = (index + 1)
             optionButton.alpha = 0.0
             optionButton.addTarget(self, action: #selector(actionOptionsTapped), for: .touchUpInside)
@@ -125,8 +117,7 @@ public final class HHFloatingView: UIView {
             optionButton.center = self.center
             self.options.append(optionButton)
         }
-        
-        //Calculate the Opening positions for the buttons.
+
         self.calculateOptionButtonsOpeningCenters()
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
@@ -141,11 +132,11 @@ public final class HHFloatingView: UIView {
     //MARK: UI Helpers
     fileprivate func dropShadow(onView view: UIView, withRadius radius: CGFloat, withColor color: CGColor, isHandlerButton: Bool) {
         if isHandlerButton {
-            if !configurations.showShadowInHandlerButton {
+            if !self.configurations.showShadowInHandlerButton {
                 return
             }
         } else {
-            if !configurations.showShadowInButtons {
+            if !self.configurations.showShadowInButtons {
                 return
             }
         }
@@ -160,17 +151,18 @@ public final class HHFloatingView: UIView {
     }
 
     //MARK: Animation Open/Close
+    fileprivate func resetTimer() {
+        self.animationTimer.invalidate()
+        self.animationTimer = nil
+    }
+    
     @objc fileprivate func optionsOpenAnimation() {
-        
-        //Handling Timer.
         guard self.currentButtonIndex <= self.maxOptions() else {
             self.enableOptionButtons()
-            self.animationTimer.invalidate()
-            self.animationTimer = nil
+            self.resetTimer()
             return
         }
-        
-        //Get the current Button.
+
         let optionButton = self.options[self.currentButtonIndex]
         self.delegate?.floatingView?(floatingView: self, willShowOption: optionButton.tag)
         
@@ -192,17 +184,13 @@ public final class HHFloatingView: UIView {
     }
     
     @objc fileprivate func optionsCloseAnimation() {
-        
-        //Handling Timer.
         guard self.currentButtonIndex >= 0 else {
             self.enableOptionButtons()
             self.currentButtonIndex = 0
-            self.animationTimer.invalidate()
-            self.animationTimer = nil
+            self.resetTimer()
             return
         }
-        
-        //Get the current Button.
+
         let optionButton = self.options[self.currentButtonIndex]
         self.delegate?.floatingView?(floatingView: self, willHideOption: optionButton.tag)
         
@@ -221,22 +209,14 @@ public final class HHFloatingView: UIView {
     
     //MARK: UI Helpers
     fileprivate func disableOptionButtons() {
-
-        if (self.handlerButton != nil) {
-            self.handlerButton?.isUserInteractionEnabled = false
-        }
-        
+        self.handlerButton?.isUserInteractionEnabled = false
         self.options.forEach { (optionButton) in
             optionButton.isUserInteractionEnabled = false
         }
     }
     
     fileprivate func enableOptionButtons() {
-        
-        if (self.handlerButton != nil) {
-            self.handlerButton?.isUserInteractionEnabled = true
-        }
-        
+        self.handlerButton?.isUserInteractionEnabled = true
         self.options.forEach { (optionButton) in
             optionButton.isUserInteractionEnabled = true
         }
@@ -258,56 +238,31 @@ public final class HHFloatingView: UIView {
         let optionsButtonSize: CGSize = self.configurations.optionsSize
         var index: Int = 0
         
-        if self.configurations.position == HHFloatingViewPosition.top {
-
+        if self.configurations.optionsDisplayDirection == HHFloatingViewOptionsDisplayDirection.top {
             self.options.forEach({ (optionButton) in
-                if index == 0 {
-                    lastCenter.y -= (topButtonSize.height + initialMargin)
-                } else {
-                    lastCenter.y -= (optionsButtonSize.height + internalMargin)
-                }
+                lastCenter.y -= (index == 0) ? (topButtonSize.height + initialMargin) : (optionsButtonSize.height + internalMargin)
                 self.openingCenters.append(lastCenter)
                 index += 1
             })
-            
-        } else if configurations.position == HHFloatingViewPosition.left {
-            
+        } else if configurations.optionsDisplayDirection == HHFloatingViewOptionsDisplayDirection.left {
             self.options.forEach({ (optionButton) in
-                if index == 0 {
-                    lastCenter.x -= (topButtonSize.height + initialMargin)
-                } else {
-                    lastCenter.x -= (optionsButtonSize.height + internalMargin)
-                }
+                lastCenter.x -= (index == 0) ? (topButtonSize.height + initialMargin) : (optionsButtonSize.height + internalMargin)
                 self.openingCenters.append(lastCenter)
                 index += 1
             })
-            
-        } else if configurations.position == HHFloatingViewPosition.right {
-            
+        } else if configurations.optionsDisplayDirection == HHFloatingViewOptionsDisplayDirection.right {
             self.options.forEach({ (optionButton) in
-                if index == 0 {
-                    lastCenter.x += (topButtonSize.height + initialMargin)
-                } else {
-                    lastCenter.x += (optionsButtonSize.height + internalMargin)
-                }
+                lastCenter.x += (index == 0) ? (topButtonSize.height + initialMargin) : (optionsButtonSize.height + internalMargin)
                 self.openingCenters.append(lastCenter)
                 index += 1
             })
-            
-        } else if configurations.position == HHFloatingViewPosition.bottom {
-            
+        } else if configurations.optionsDisplayDirection == HHFloatingViewOptionsDisplayDirection.bottom {
             self.options.forEach({ (optionButton) in
-                if index == 0 {
-                    lastCenter.y += (topButtonSize.height + initialMargin)
-                } else {
-                    lastCenter.y += (optionsButtonSize.height + internalMargin)
-                }
+                lastCenter.y += (index == 0) ? (topButtonSize.height + initialMargin) : (optionsButtonSize.height + internalMargin)
                 self.openingCenters.append(lastCenter)
                 index += 1
             })
-            
         }
-        
     }
     
     //MARK: Actions
@@ -315,18 +270,13 @@ public final class HHFloatingView: UIView {
         self.delegate?.floatingView(floatingView: self, didSelectOption: sender.tag)
     }
     
-    @objc fileprivate func actionOpenOrCloseOptionsView(sender: HHFloatingViewButton) {
-        
+    @objc fileprivate func actionOpenOrCloseOptionsView(sender: HHFloatingViewButton?) {
         self.disableOptionButtons()
-        
         if self.isOpen {
-            
-            self.currentButtonIndex = maxOptions()
+            self.currentButtonIndex = self.maxOptions()
             self.isOpen = false
             self.animationTimer = Timer.scheduledTimer(timeInterval: self.configurations.animationTimerDuration, target: self, selector: #selector(self.optionsCloseAnimation), userInfo: nil, repeats: true)
-            
         } else {
-            
             self.currentButtonIndex = 0
             self.isOpen = true
             self.animationTimer = Timer.scheduledTimer(timeInterval: self.configurations.animationTimerDuration, target: self, selector: #selector(self.optionsOpenAnimation), userInfo: nil, repeats: true)
@@ -352,7 +302,7 @@ public final class HHFloatingView: UIView {
     /// Close HHFloatingView.
     internal func close() {
         if self.isOpen {
-            self.actionOpenOrCloseOptionsView(sender: self.handlerButton!)
+            self.actionOpenOrCloseOptionsView(sender: self.handlerButton)
         }
     }
     
@@ -374,7 +324,6 @@ public final class HHFloatingView: UIView {
     }
     
     fileprivate func isValidConfiguration() -> Bool {
-        
         let isOptionIsNotZero = (self.configurations.numberOfOptions > 0)
         let isOptionsNotEmpty = (!self.configurations.optionImages.isEmpty && !self.configurations.optionColors.isEmpty)
         let isNumberOfOptionsAreEqualsToOptionsImages = (self.configurations.numberOfOptions == self.configurations.optionImages.count)
@@ -389,6 +338,5 @@ public final class HHFloatingView: UIView {
         } else {
             fatalError("HHFloatingView: numberOfOptions should not be Zero.")
         }
-        
     }
 }

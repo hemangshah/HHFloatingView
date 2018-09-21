@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc public enum HHFloatingViewPosition: Int {
+@objc public enum HHFloatingViewOptionsDisplayDirection: Int {
     case top, left, right, bottom
 }
 
@@ -16,15 +16,15 @@ import UIKit
     /// Total number of options will be display in HHFloatingView. Default: 0
     public var numberOfOptions: Int = 0
     /// Images to be display for each of the options.
-    public var optionImages: Array<UIImage> = []
+    public var optionImages = [UIImage]()
     /// Colors to be display for each of the options.
-    public var optionColors: Array<UIColor> = []
+    public var optionColors = [UIColor]()
     /// Handler Image to be display for HHFloatingView.
-    public var handlerImage: UIImage = UIImage.init()
+    public var handlerImage = UIImage.init()
     /// Handler Color to be display for HHFloatingView. Default: white
-    public var handlerColor: UIColor = UIColor.white
+    public var handlerColor = UIColor.white
     /// Position for HHFloatingView. Default: top
-    public var position: HHFloatingViewPosition = .top
+    public var optionsDisplayDirection: HHFloatingViewOptionsDisplayDirection = .top
     /// Handler Button Size. Default: 80x80
     public var handlerSize: CGSize = .init(width: 80.0, height: 80.0)
     /// Options Button Size. Default: 60x60
@@ -38,11 +38,11 @@ import UIKit
     /// Internal Animation Timer Duration. Default: 0.2
     public var internalAnimationTimerDuration: TimeInterval = 0.2
     /// Show Shadow for Options. Default: false
-    public var showShadowInButtons: Bool = false
+    public var showShadowInButtons = false
     /// Show Shadow for Handler Button. Default: false
-    public var showShadowInHandlerButton: Bool = false
+    public var showShadowInHandlerButton = false
     /// Show Scale Animation for Buttons and Handler. Default: false
-    public var showScaleAnimation: Bool = false
+    public var showScaleAnimation = false
     /// Size for the Scale Animation. Default: 1.0
     public var scaleAnimationSize: CGFloat = 1.0
 }
