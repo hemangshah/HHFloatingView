@@ -1,6 +1,6 @@
 language: swift
-osx_image: xcode9.2
-#xcode_project: HHFloatingView.xcodeproj
+osx_image: xcode10.0
+
 branches:
   only:
     - master    
