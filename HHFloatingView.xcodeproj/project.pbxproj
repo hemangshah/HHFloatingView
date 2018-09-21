@@ -43,6 +43,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B2BE7112154E34D00EED478 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				F1ADC2391F97563800464FD3 /* Main.storyboard */,
+				F1ADC2351F97563800464FD3 /* AppDelegate.swift */,
+				F1ADC2471F97565A00464FD3 /* BaseViewController.swift */,
+				F1ADC2371F97563800464FD3 /* ViewController.swift */,
+			);
+			path = Example;
+			sourceTree = "<group>";
+		};
 		F1ADC2291F97563800464FD3 = {
 			isa = PBXGroup;
 			children = (
@@ -62,11 +73,8 @@
 		F1ADC2341F97563800464FD3 /* HHFloatingView */ = {
 			isa = PBXGroup;
 			children = (
+				6B2BE7112154E34D00EED478 /* Example */,
 				F1ADC2491F9756C900464FD3 /* Source */,
-				F1ADC2351F97563800464FD3 /* AppDelegate.swift */,
-				F1ADC2471F97565A00464FD3 /* BaseViewController.swift */,
-				F1ADC2371F97563800464FD3 /* ViewController.swift */,
-				F1ADC2391F97563800464FD3 /* Main.storyboard */,
 				F1ADC23C1F97563800464FD3 /* Assets.xcassets */,
 				F1ADC23E1F97563800464FD3 /* LaunchScreen.storyboard */,
 				F1ADC2411F97563800464FD3 /* Info.plist */,
