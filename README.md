@@ -26,14 +26,13 @@ An easy to use and setup floating view for your app. 🎡
 
 ## Usage
 
-Please check the example project.
+Please check the [example](https://github.com/hemangshah/HHFloatingView/tree/master/HHFloatingView/Example) project.
 
 
 # ToDo[s]
 
 - [x] More customizations.
 - [x] Add Documentations.
-- [ ] Add Titles with Options.
 
 You can [watch](https://github.com/hemangshah/HHFloatingView/subscription) to **HHFloatingView** to see continuous updates. Stay tuned.
 
