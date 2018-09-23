@@ -1,12 +1,13 @@
 # HHFloatingView
 An easy to use and setup floating view for your app. 🎡
 
+
 [![Build Status](https://travis-ci.org/hemangshah/HHFloatingView.svg?branch=master)](https://travis-ci.org/hemangshah/HHFloatingView)
-![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
-![Platform](https://img.shields.io/badge/Platforms-iOS-red.svg)
-![Swift 4.x](https://img.shields.io/badge/Swift-4.x-blue.svg)
-![CocoaPods](https://img.shields.io/cocoapods/dt/HHFloatingView.svg)
-![MadeWithLove](https://img.shields.io/badge/Made%20with%20%E2%9D%A4-India-green.svg)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](https://github.com/hemangshah/HHFloatingView/blob/master/LICENSE)
+[![Platform](https://img.shields.io/badge/Platforms-iOS-red.svg)](https://www.apple.com/in/ios/)
+[![Swift 4.x](https://img.shields.io/badge/Swift-4.x-blue.svg)](https://swift.org/)
+[![CocoaPods](https://img.shields.io/cocoapods/dt/HHFloatingView.svg)](https://cocoapods.org/pods/HHFloatingView)
+[![MadeWithLove](https://img.shields.io/badge/Made%20with%20%E2%9D%A4-India-green.svg)](https://madewithlove.org.in/)
 [![Awesome-Swift](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/matteocrippa/awesome-swift/)
 
 <table>
@@ -30,9 +31,6 @@ Please check the [example](https://github.com/hemangshah/HHFloatingView/tree/mas
 
 
 # ToDo[s]
-
-- [x] More customizations.
-- [x] Add Documentations.
 
 You can [watch](https://github.com/hemangshah/HHFloatingView/subscription) to **HHFloatingView** to see continuous updates. Stay tuned.
 
