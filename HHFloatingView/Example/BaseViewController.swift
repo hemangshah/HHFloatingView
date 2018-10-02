@@ -20,10 +20,10 @@ class BaseViewController: UIViewController {
     
     //MARK: Add Floating View.
     internal func addFloatingView() {
-        self.floatingView.delegate = self
-        self.floatingView.datasource = self
-        self.view.addSubview(self.floatingView)
-        self.floatingView.reload()
+        floatingView.delegate = self
+        floatingView.datasource = self
+        view.addSubview(floatingView)
+        floatingView.reload()
     }
 }
 
@@ -55,6 +55,6 @@ extension BaseViewController: HHFloatingViewDatasource {
 extension BaseViewController: HHFloatingViewDelegate {
     func floatingView(floatingView: HHFloatingView, didSelectOption index: Int) {
         print("HHFloatingView: Button Selected: \(index)")
-        self.floatingView.close()
+        floatingView.close()
     }
 }
