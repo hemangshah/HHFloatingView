@@ -284,7 +284,7 @@ public final class HHFloatingView: UIView {
     }
     
     /// Reload HHFloatingView.
-    internal func reload() {
+    public func reload() {
         if self.isDatasourceSet() {
             if self.isDelegateSet() {
                 self.fetchDatasource()
@@ -300,7 +300,7 @@ public final class HHFloatingView: UIView {
     }
     
     /// Close HHFloatingView.
-    internal func close() {
+    public func close() {
         if self.isOpen {
             self.actionOpenOrCloseOptionsView(sender: self.handlerButton)
         }
