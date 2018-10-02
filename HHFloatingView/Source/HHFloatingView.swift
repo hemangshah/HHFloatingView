@@ -8,17 +8,24 @@
 
 import UIKit
 
-@objc public protocol HHFloatingViewDatasource {    
+public protocol HHFloatingViewDatasource: class {
     func floatingViewConfiguration(floatingView: HHFloatingView) -> HHFloatingViewConfiguration
 }
 
-@objc public protocol HHFloatingViewDelegate {
+public protocol HHFloatingViewDelegate: class {
     func floatingView(floatingView: HHFloatingView, didSelectOption index: Int)
     
-    @objc optional func floatingView(floatingView: HHFloatingView, willShowOption index: Int)
-    @objc optional func floatingView(floatingView: HHFloatingView, didShowOption index: Int)
-    @objc optional func floatingView(floatingView: HHFloatingView, willHideOption index: Int)
-    @objc optional func floatingView(floatingView: HHFloatingView, didHideOption index: Int)
+    func floatingView(floatingView: HHFloatingView, willShowOption index: Int)
+    func floatingView(floatingView: HHFloatingView, didShowOption index: Int)
+    func floatingView(floatingView: HHFloatingView, willHideOption index: Int)
+    func floatingView(floatingView: HHFloatingView, didHideOption index: Int)
+}
+
+public extension HHFloatingViewDelegate {
+    func floatingView(floatingView: HHFloatingView, willShowOption index: Int) {}
+    func floatingView(floatingView: HHFloatingView, didShowOption index: Int) {}
+    func floatingView(floatingView: HHFloatingView, willHideOption index: Int) {}
+    func floatingView(floatingView: HHFloatingView, didHideOption index: Int) {}
 }
 
 public final class HHFloatingView: UIView {
@@ -164,7 +171,7 @@ public final class HHFloatingView: UIView {
         }
 
         let optionButton = options[currentButtonIndex]
-        delegate?.floatingView?(floatingView: self, willShowOption: optionButton.tag)
+        delegate?.floatingView(floatingView: self, willShowOption: optionButton.tag)
         
         let optionButtonCenter = openingCenters[currentButtonIndex]
         optionButton.alpha = 0.0
@@ -176,7 +183,7 @@ public final class HHFloatingView: UIView {
             self.scaleAnimateButton(button: optionButton, scaleValue: self.configurations.scaleAnimationSize)
         }, completion: { (isCompleted) in
             if isCompleted {
-                self.delegate?.floatingView?(floatingView: self, didShowOption: optionButton.tag)
+                self.delegate?.floatingView(floatingView: self, didShowOption: optionButton.tag)
             }
         })
         
@@ -192,7 +199,7 @@ public final class HHFloatingView: UIView {
         }
 
         let optionButton = options[currentButtonIndex]
-        delegate?.floatingView?(floatingView: self, willHideOption: optionButton.tag)
+        delegate?.floatingView(floatingView: self, willHideOption: optionButton.tag)
         
         UIView.animate(withDuration: configurations.internalAnimationTimerDuration, animations: {
             self.scaleAnimateButton(button: optionButton, scaleValue: self.configurations.scaleAnimationSize)
@@ -200,7 +207,7 @@ public final class HHFloatingView: UIView {
         }, completion: { (isCompleted) in
             if isCompleted {
                 optionButton.alpha = 0.0
-                self.delegate?.floatingView?(floatingView: self, didHideOption: optionButton.tag)
+                self.delegate?.floatingView(floatingView: self, didHideOption: optionButton.tag)
             }
         })
         

@@ -13,6 +13,6 @@ class ViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.addFloatingView()
+        addFloatingView()
     }
 }
