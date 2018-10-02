@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 s.name             = 'HHFloatingView'
 s.module_name      = 'HHFloatingView'
-s.version          = '1.3.0'
+s.version          = '1.4.0'
 s.summary          = 'An easy to use and setup floating view for your app. 🎡'
 s.description      = 'HHFloatingView is another options view which you can use to show basic options for your app.'
 s.homepage         = 'https://github.com/hemangshah/HHFloatingView'
