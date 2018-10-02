@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 Latest release is available [here](https://github.com/hemangshah/HHFloatingView/releases/latest).
 
+## [1.4.0](https://github.com/hemangshah/HHFloatingView/releases/tag/1.4.0) - Oct 02, 2018
+- Code refactored:
+    - Removed self specifier for the global properties & example.
+    - Use swift best practice to implement protocols.
+    - Fixed #1 (https://github.com/hemangshah/HHFloatingView/issues/1)
+
 ## [1.3.0](https://github.com/hemangshah/HHFloatingView/releases/tag/1.3.0) - Sep 21, 2018
 - Example updated to support swift 4.2 and code refactoring.
 
