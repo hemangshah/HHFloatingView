@@ -74,9 +74,9 @@ public final class HHFloatingView: UIView {
         handlerButton?.backgroundColor = configurations.handlerColor
         handlerButton?.setImage(configurations.handlerImage, for: .normal)
 
-        self.options.forEach { (optionButton) in
-            optionButton.backgroundColor = configurations.handlerColor
-            optionButton.setImage(configurations.handlerImage, for: .normal)
+        for (index, optionButton) in options.enumerated() {
+            optionButton.backgroundColor = configurations.optionColors[index]
+            optionButton.setImage(configurations.optionImages[index], for: .normal)
         }
         
         calculateOptionButtonsOpeningCenters()
