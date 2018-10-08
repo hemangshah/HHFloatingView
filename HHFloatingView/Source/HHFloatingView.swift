@@ -302,11 +302,23 @@ public final class HHFloatingView: UIView {
         }
     }
     
+    /// Open HHFloatingView.
+    public func open() {
+        if !isOpen {
+            actionOpenOrCloseOptionsView(sender: handlerButton)
+        }
+    }
+    
     /// Close HHFloatingView.
     public func close() {
         if isOpen {
             actionOpenOrCloseOptionsView(sender: handlerButton)
         }
+    }
+    
+    /// Toggle Open/Close
+    public func toggle() {
+        actionOpenOrCloseOptionsView(sender: handlerButton)
     }
     
     //MARK: Validations
