@@ -45,4 +45,6 @@ import UIKit
     public var showScaleAnimation = false
     /// Size for the Scale Animation. Default: 1.0
     public var scaleAnimationSize: CGFloat = 1.0
+    /// To drag floating view within application screen. Default: false
+    public var isDraggable: Bool = false
 }

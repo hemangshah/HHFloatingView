@@ -127,12 +127,98 @@ public final class HHFloatingView: UIView {
 
         calculateOptionButtonsOpeningCenters()
         
+        if configurations.isDraggable { addPanGesture() }
+        
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
             UIView.animate(withDuration: self.configurations.internalAnimationTimerDuration) {
                 if self.configurations.showScaleAnimation {
                     self.scaleAnimateButton(button: self.handlerButton, scaleValue: self.configurations.scaleAnimationSize)
                 }
             }
+        }
+    }
+    
+    //MARK: Draggable
+    fileprivate func addPanGesture() {
+        let pan = UIPanGestureRecognizer.init(target: self, action: #selector(actionDrag))
+        //pan.cancelsTouchesInView = false
+        handlerButton?.addGestureRecognizer(pan)
+    }
+    
+    @objc fileprivate func actionDrag(pan: UIPanGestureRecognizer) {
+        guard let thisView = pan.view, !isOpen, configurations.isDraggable else { return }
+        let translation = pan.translation(in: thisView)
+        thisView.center = CGPoint.init(x: thisView.center.x + translation.x, y: thisView.center.y + translation.y)
+        pan.setTranslation(.zero, in: thisView)
+        
+        if pan.state == .cancelled || pan.state == .ended {
+           onDragCompletion()
+        }
+    }
+    
+    fileprivate func onDragCompletion() {
+        finalizeMargins()
+        reCenterOptions()
+        updateOptionsDisplayDirection()
+        calculateOptionButtonsOpeningCenters()
+    }
+    
+    fileprivate func reCenterOptions() {
+        guard let handlerButton = handlerButton else { return }
+        self.center = handlerButton.center
+        _ = options.map { $0.center = handlerButton.center }
+    }
+    
+    fileprivate func finalizeMargins() {
+        guard let superView = superview, let handlerButton = handlerButton else { return }
+        
+        let margin: CGFloat = 10.0
+        
+        let positionMinX = handlerButton.frame.minX
+        let positionMaxX = handlerButton.frame.maxX
+        let positionMinY = handlerButton.frame.minY
+        let positionMaxY = handlerButton.frame.maxY
+        
+        let frameMaxX = superView.frame.maxX
+        let frameMaxY = superView.frame.maxY
+        
+        var requirePosition = handlerButton.frame.origin
+        
+        if positionMaxX > frameMaxX {
+            requirePosition.x = positionMaxX - ((positionMaxX - frameMaxX) + configurations.handlerSize.width + margin)
+        } else if positionMinX < 0.0 {
+            requirePosition.x = margin
+        }
+        
+        if positionMaxY > frameMaxY {
+            requirePosition.y = positionMaxY - ((positionMaxY - frameMaxY) + configurations.handlerSize.height + margin)
+        } else if positionMinY < 0.0 {
+            requirePosition.y = margin
+        }
+        
+        var frame = handlerButton.frame
+        frame.origin = requirePosition
+        handlerButton.frame = frame
+    }
+    
+    fileprivate func updateOptionsDisplayDirection() {
+        guard let superView = superview, let handlerButton = handlerButton else { return }
+        let position = handlerButton.frame.origin
+        let frameMaxX = superView.frame.maxX
+        let frameMaxY = superView.frame.maxY
+        
+        if position.x < frameMaxX/2.0 && position.y > frameMaxY/2.0 {
+            configurations.optionsDisplayDirection = .top
+        } else if position.x > frameMaxX/2.0 && position.y > frameMaxY/2.0 {
+            configurations.optionsDisplayDirection = .top
+        } else if position.x < frameMaxX/2.0 && position.y > frameMaxY/3.0 {
+            configurations.optionsDisplayDirection = .top
+        } else if position.x > frameMaxX/2.0 && position.y < frameMaxY/3.0 {
+            configurations.optionsDisplayDirection = .bottom
+        } else if position.x < frameMaxX/2.0 && position.y < frameMaxY/3.0 {
+            configurations.optionsDisplayDirection = .bottom
+        } else if position.x > frameMaxX/2.0 && position.y > frameMaxY/3.0 {
+            configurations.optionsDisplayDirection = .top
         }
     }
     
@@ -240,26 +326,27 @@ public final class HHFloatingView: UIView {
         let topButtonSize: CGSize = configurations.handlerSize
         let optionsButtonSize: CGSize = configurations.optionsSize
         var index: Int = 0
+        let optionsDisplayDirection = configurations.optionsDisplayDirection
         
-        if configurations.optionsDisplayDirection == HHFloatingViewOptionsDisplayDirection.top {
+        if optionsDisplayDirection == .top {
             self.options.forEach({ (optionButton) in
                 lastCenter.y -= (index == 0) ? (topButtonSize.height + initialMargin) : (optionsButtonSize.height + internalMargin)
                 openingCenters.append(lastCenter)
                 index += 1
             })
-        } else if configurations.optionsDisplayDirection == HHFloatingViewOptionsDisplayDirection.left {
+        } else if optionsDisplayDirection == .left {
             self.options.forEach({ (optionButton) in
                 lastCenter.x -= (index == 0) ? (topButtonSize.height + initialMargin) : (optionsButtonSize.height + internalMargin)
                 openingCenters.append(lastCenter)
                 index += 1
             })
-        } else if configurations.optionsDisplayDirection == HHFloatingViewOptionsDisplayDirection.right {
+        } else if optionsDisplayDirection == .right {
             self.options.forEach({ (optionButton) in
                 lastCenter.x += (index == 0) ? (topButtonSize.height + initialMargin) : (optionsButtonSize.height + internalMargin)
                 openingCenters.append(lastCenter)
                 index += 1
             })
-        } else if configurations.optionsDisplayDirection == HHFloatingViewOptionsDisplayDirection.bottom {
+        } else if optionsDisplayDirection == .bottom {
             self.options.forEach({ (optionButton) in
                 lastCenter.y += (index == 0) ? (topButtonSize.height + initialMargin) : (optionsButtonSize.height + internalMargin)
                 openingCenters.append(lastCenter)
