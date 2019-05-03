@@ -9,17 +9,24 @@
 import UIKit
 
 public protocol HHFloatingViewDatasource: class {
+    /// This datasource will be the entry point to configure the floating-view.
     func floatingViewConfiguration(floatingView: HHFloatingView) -> HHFloatingViewConfiguration
 }
 
 public protocol HHFloatingViewDelegate: class {
+    /// This delegate will tell which option is selected.
     func floatingView(floatingView: HHFloatingView, didSelectOption index: Int)
     
+    /// This delegate will tell when you're opening or closing the floating-view.
     func floatingView(floatingView: HHFloatingView, didTapHandler isOpening: Bool)
     
+    /// This delegate will tell which option is going to display.
     func floatingView(floatingView: HHFloatingView, willShowOption index: Int)
+    /// This delegate will tell which option is displayed.
     func floatingView(floatingView: HHFloatingView, didShowOption index: Int)
+    /// This delegate will tell which option is going to hide.
     func floatingView(floatingView: HHFloatingView, willHideOption index: Int)
+    /// This delegate will tell which option is hidden.
     func floatingView(floatingView: HHFloatingView, didHideOption index: Int)
 }
 
@@ -88,10 +95,11 @@ public final class HHFloatingView: UIView {
             scaleAnimateButton(button: handlerButton, scaleValue: 0.0)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-            UIView.animate(withDuration: self.configurations.internalAnimationTimerDuration) {
-                if self.configurations.showScaleAnimation {
-                    self.scaleAnimateButton(button: self.handlerButton, scaleValue: self.configurations.scaleAnimationSize)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) { [weak self] in
+            guard let strongSelf = self else { return }
+            UIView.animate(withDuration: strongSelf.configurations.internalAnimationTimerDuration) {
+                if strongSelf.configurations.showScaleAnimation {
+                    strongSelf.scaleAnimateButton(button: strongSelf.handlerButton, scaleValue: strongSelf.configurations.scaleAnimationSize)
                 }
             }
         }
@@ -132,10 +140,11 @@ public final class HHFloatingView: UIView {
         
         if configurations.isDraggable { addPanGesture() }
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-            UIView.animate(withDuration: self.configurations.internalAnimationTimerDuration) {
-                if self.configurations.showScaleAnimation {
-                    self.scaleAnimateButton(button: self.handlerButton, scaleValue: self.configurations.scaleAnimationSize)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) { [weak self] in
+            guard let strongSelf = self else { return }
+            UIView.animate(withDuration: strongSelf.configurations.internalAnimationTimerDuration) {
+                if strongSelf.configurations.showScaleAnimation {
+                    strongSelf.scaleAnimateButton(button: strongSelf.handlerButton, scaleValue: strongSelf.configurations.scaleAnimationSize)
                 }
             }
         }
