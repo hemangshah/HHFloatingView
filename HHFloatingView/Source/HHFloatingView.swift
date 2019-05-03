@@ -15,6 +15,8 @@ public protocol HHFloatingViewDatasource: class {
 public protocol HHFloatingViewDelegate: class {
     func floatingView(floatingView: HHFloatingView, didSelectOption index: Int)
     
+    func floatingView(floatingView: HHFloatingView, didTapHandler isOpening: Bool)
+    
     func floatingView(floatingView: HHFloatingView, willShowOption index: Int)
     func floatingView(floatingView: HHFloatingView, didShowOption index: Int)
     func floatingView(floatingView: HHFloatingView, willHideOption index: Int)
@@ -22,6 +24,7 @@ public protocol HHFloatingViewDelegate: class {
 }
 
 public extension HHFloatingViewDelegate {
+    func floatingView(floatingView: HHFloatingView, didTapHandler isOpening: Bool) {}
     func floatingView(floatingView: HHFloatingView, willShowOption index: Int) {}
     func floatingView(floatingView: HHFloatingView, didShowOption index: Int) {}
     func floatingView(floatingView: HHFloatingView, willHideOption index: Int) {}
@@ -141,7 +144,6 @@ public final class HHFloatingView: UIView {
     //MARK: Draggable
     fileprivate func addPanGesture() {
         let pan = UIPanGestureRecognizer.init(target: self, action: #selector(actionDrag))
-        //pan.cancelsTouchesInView = false
         handlerButton?.addGestureRecognizer(pan)
     }
     
@@ -363,10 +365,12 @@ public final class HHFloatingView: UIView {
     @objc fileprivate func actionOpenOrCloseOptionsView(sender: HHFloatingViewButton?) {
         disableOptionButtons()
         if isOpen {
+            delegate?.floatingView(floatingView: self, didTapHandler: false)
             currentButtonIndex = maxOptions()
             isOpen = false
             animationTimer = Timer.scheduledTimer(timeInterval: configurations.animationTimerDuration, target: self, selector: #selector(self.optionsCloseAnimation), userInfo: nil, repeats: true)
         } else {
+            delegate?.floatingView(floatingView: self, didTapHandler: true)
             currentButtonIndex = 0
             isOpen = true
             animationTimer = Timer.scheduledTimer(timeInterval: configurations.animationTimerDuration, target: self, selector: #selector(self.optionsOpenAnimation), userInfo: nil, repeats: true)
