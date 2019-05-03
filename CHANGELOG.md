@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 Latest release is available [here](https://github.com/hemangshah/HHFloatingView/releases/latest).
 
+## [3.0.0](https://github.com/hemangshah/HHFloatingView/releases/tag/3.0.0) - May 03, 2019
+- Swift 5.0. 🚀
+- Code refactored.
+- Fixed #6 (https://github.com/hemangshah/HHFloatingView/issues/6)
+
 ## [2.0.0](https://github.com/hemangshah/HHFloatingView/releases/tag/2.0.0) - Oct 21, 2018
 - Minor code refactored.
 - Fixed #4 (https://github.com/hemangshah/HHFloatingView/issues/4)
